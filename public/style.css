@@ -1,0 +1,99 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, "Liberation Sans", Arial, sans-serif;
+  font-weight: 400;
+  height: 100%;
+  background: #eee;
+}
+
+#container {
+  max-width: 500px;
+  min-height: 100%;
+  margin: 0 auto;
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.3);
+}
+
+.cloze {
+  color: blue;
+  font-weight: bold;
+}
+
+#card {
+  padding-top: 76px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  min-height: 20px;
+  z-index: 10;
+}
+
+#card .front, #card .back {
+  display: none;
+  position: absolute;
+  left: 1em;
+  right: 1em;
+}
+
+#card .solid {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 0 1em;
+  padding-bottom: 1em;
+}
+
+#switcher {
+  text-align: center;
+  font-weight: bold;
+  cursor: default;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 60px;
+  z-index: 100;
+}
+
+#switcher .inner {
+  padding: 1em 0;
+  background: white;
+  max-width: 500px;
+  border-bottom: 2px solid #ccc;
+  margin: 0 auto;
+}
+
+#paused { 
+  font-weight: normal;
+  font-family: "Helvetica Neue", Helvetica, "Liberation Sans", Arial, sans-serif;
+  font-size: 12px;
+  opacity: 0; 
+  color: #777;
+  -webkit-transition: opacity 500ms linear;
+}
+.hover #paused { opacity: 1; }
+
+select, #next {
+  font-size: 16px;
+}
+
+#card div img {
+  max-width: 100%;
+}
+
+#timer {
+  margin: -5px 0;
+  vertical-align: middle;
+}
+
+#next-card { display: none; }
+
+hr { 
+  border-top: 2px solid #ccc;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}

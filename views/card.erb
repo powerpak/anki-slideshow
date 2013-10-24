@@ -1,0 +1,159 @@
+<div id="container">
+  
+  <div id="switcher">
+    <div class="inner">
+      Deck: 
+      <select name="decks" id="decks">
+        <% @decks.each do |d| %>
+        <option<%= @deck_name == d ? ' selected' : '' %> value="<%= d %>"><%= d %></option>
+        <% end %>
+      </select>
+      <input type="button" name="next" id="next" value="Turn over">
+      <select name="delay" id="delay">
+        <option value="0">off</option>
+        <option value="5000">5s</option>
+        <option value="10000" selected>10s</option>
+        <option value="15000">15s</option>
+        <option value="20000">20s</option>
+        <option value="30000">30s</option>
+        <option value="40000">40s</option>
+        <option value="60000">60s</option>
+      </select>
+      <canvas width="20" height="20" id="timer"></canvas>
+      <span id="paused">paused</span>
+    </div>
+  </div>
+
+  <div id="card">
+    <div class="front solid">
+      <%= @card["q"] %>
+    </div>
+    <div class="back">
+      <%= @card["a"] %>
+    </div>
+  </div>
+
+  <div id="next-card"></div>
+
+</div>
+
+<script>
+$(function() {
+  
+  var fadeTime = 500, changeTime = [10000, 10000];
+  
+  $.fn.extend({
+    
+    timer: function(msecs, onFinished) {
+      return this.each(function() {
+        if (this.tagName != 'CANVAS' || !this.getContext) { return true; }
+        var duration = msecs,
+          callback = onFinished,
+          elapsed = 0,
+          canvas = this,
+          ctx = canvas.getContext('2d'),
+          started, interval,
+          w = canvas.width,
+          h = canvas.height;
+        
+        function doTick() {
+          var newTime = (new Date).getTime(),
+            timeElapsed = Math.min(newTime - started, duration),
+            fracElapsed = timeElapsed / duration;
+          canvas.width = w;
+          ctx.beginPath();
+          ctx.moveTo(w / 2, h / 2);
+          ctx.arc(w / 2, h / 2, h / 2, 0 - Math.PI / 2, 
+            (Math.PI * 2) * fracElapsed - Math.PI / 2, false);
+          ctx.moveTo(w / 2, h / 2);
+          ctx.closePath();
+          ctx.fillStyle = "#ccc";
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(w / 2, h / 2, h / 4, 0, Math.PI * 2, false);
+          ctx.closePath();
+          ctx.fillStyle = "#fff";
+          ctx.fill();
+          
+          if (fracElapsed == 1.0) {
+            $(canvas).trigger('stop');
+            callback && callback();
+          }
+        }
+        
+        $(this).bind('stop', function(e) {
+          var now = (new Date).getTime();
+          window.clearInterval(interval);
+          elapsed = Math.min(now - started, duration);
+        });
+        
+        $(this).bind('callback', function(e, newCallback) {
+          if (newCallback) { callback = newCallback; }
+        });
+        
+        $(this).bind('start', function(e, newDuration) {
+          window.clearInterval(interval);
+          if (newDuration) { 
+            duration = newDuration;
+            elapsed = 0;
+          }
+          started = (new Date).getTime() - elapsed;
+          interval = window.setInterval(doTick, 100);
+          doTick();
+        });
+        
+        $(this).trigger('start');
+        
+      });
+    }
+    
+  });
+  
+  function flipCard(e) {
+    $('#timer').trigger('stop').addClass('transition');
+    $('#card .front').removeClass('solid').fadeOut(fadeTime);
+    $('#next').val('Next card').unbind('click').click(nextCard);
+    $('#timer').trigger('callback', nextCard);
+    $('#timer').trigger('start', changeTime[1]).removeClass('transition');
+    $('#card .back').addClass('solid').fadeIn(fadeTime);
+    if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
+  }
+  
+  function nextCard(e) {
+    var href = encodeURIComponent($('#decks').val());
+    $('#timer').trigger('stop').addClass('transition');
+    $("#next-card").load(href + " #card > *", function() {
+      $('#card').fadeOut(fadeTime, function() {
+        if (window.history && window.history.pushState && window.location.href != href) {
+          window.history.pushState(null, null, href);
+        }
+        $('#card').empty().show().append($('#next-card > *'));
+        $('#next').val('Turn over').unbind('click').click(flipCard);
+        $('#timer').trigger('callback', flipCard);
+        $('#timer').trigger('start', changeTime[0]).removeClass('transition');
+        $('#card .front').addClass('solid').fadeIn();
+        if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
+      });
+    });
+  }
+  
+  $('#next').click(flipCard);
+  $('#timer').timer(changeTime[0], flipCard);
+  $('#card .front').fadeIn(fadeTime);
+  $('#decks').change(nextCard);
+  $('#container').click(function(e) { 
+    if (!$(e.target).closest('#switcher').length) { $('#next').click(); }
+  });
+  
+  $('#container').mouseenter(function() {
+    $('body').addClass('hover');
+    if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
+  }).mouseleave(function() {
+    $('body').removeClass('hover');
+    if ($('#timer').not('.transition')) { $('#timer').trigger('start'); }
+  });
+  
+  console.log('this is getting executed.');
+  
+})
+</script>
