@@ -40,26 +40,26 @@
 <script>
 $(function() {
   
-  var fadeTime = 500, changeTime = [10000, 10000];
+  var fadeTime = 500, changeTime = [10000, 6700];
   
   $.fn.extend({
     
     timer: function(msecs, onFinished) {
       return this.each(function() {
         if (this.tagName != 'CANVAS' || !this.getContext) { return true; }
-        var duration = msecs,
-          callback = onFinished,
+        var callback = onFinished,
           elapsed = 0,
           canvas = this,
           ctx = canvas.getContext('2d'),
-          started, interval,
+          interval = null,
+          started, duration,
           w = canvas.width,
           h = canvas.height;
         
         function doTick() {
           var newTime = (new Date).getTime(),
             timeElapsed = Math.min(newTime - started, duration),
-            fracElapsed = timeElapsed / duration;
+            fracElapsed = duration > 0 ? timeElapsed / duration : 0;
           canvas.width = w;
           ctx.beginPath();
           ctx.moveTo(w / 2, h / 2);
@@ -75,15 +75,16 @@ $(function() {
           ctx.fillStyle = "#fff";
           ctx.fill();
           
-          if (fracElapsed == 1.0) {
+          if (duration > 0 && fracElapsed == 1.0) {
             $(canvas).trigger('stop');
-            callback && callback();
+            callback && (typeof(callback) == 'function') && callback();
           }
         }
         
         $(this).bind('stop', function(e) {
           var now = (new Date).getTime();
           window.clearInterval(interval);
+          interval = null;
           elapsed = Math.min(now - started, duration);
         });
         
@@ -93,16 +94,22 @@ $(function() {
         
         $(this).bind('start', function(e, newDuration) {
           window.clearInterval(interval);
-          if (newDuration) { 
+          if (typeof(newDuration) == 'number') { 
             duration = newDuration;
             elapsed = 0;
           }
-          started = (new Date).getTime() - elapsed;
-          interval = window.setInterval(doTick, 100);
+          if (duration && duration > 0) {
+            started = (new Date).getTime() - elapsed;
+            interval = window.setInterval(doTick, 100);
+          }
           doTick();
         });
         
-        $(this).trigger('start');
+        $(this).bind('toggle', function(e) {
+          $(this).trigger(interval === null ? 'start' : 'stop');
+        });
+        
+        $(this).trigger('start', msecs);
         
       });
     }
@@ -141,19 +148,32 @@ $(function() {
   $('#timer').timer(changeTime[0], flipCard);
   $('#card .front').fadeIn(fadeTime);
   $('#decks').change(nextCard);
-  $('#container').click(function(e) { 
-    if (!$(e.target).closest('#switcher').length) { $('#next').click(); }
+  $('#delay').change(function() {
+    changeTime[0] = parseInt($(this).val());
+    changeTime[1] = Math.round(changeTime[0] * 0.67);
+    $('#timer').trigger('start', changeTime[$('#card .back').is(':visible') ? 1 : 0]);
   });
   
-  $('#container').mouseenter(function() {
-    $('body').addClass('hover');
-    if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
-  }).mouseleave(function() {
-    $('body').removeClass('hover');
-    if ($('#timer').not('.transition')) { $('#timer').trigger('start'); }
-  });
+  var mobileBrowsers = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  if (mobileBrowsers.test(navigator.userAgent)) {
+    // If on a mobile device, tap the timer to pause it
+    $('#timer').on('touchstart', function () { $('#timer').trigger('toggle'); });
+    $('#container').on('tapone', function(e, e2) { 
+      if (!$(e2.originalEvent.target).closest('#switcher').length) { $('#next').click(); }
+    });
+  } else {
+    // On a desktop, use mouse hover to determine when to pause timer
+    $('#container').mouseenter(function() {
+      $('body').addClass('hover');
+      if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
+    }).mouseleave(function() {
+      $('body').removeClass('hover');
+      if ($('#timer').not('.transition')) { $('#timer').trigger('start'); }
+    });
+    $('#container').click(function(e) { 
+      if (!$(e.target).closest('#switcher').length) { $('#next').click(); }
+    });
+  } 
   
-  console.log('this is getting executed.');
-  
-})
+});
 </script>

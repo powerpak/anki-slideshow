@@ -59,7 +59,7 @@ html, body {
 }
 
 #switcher .inner {
-  padding: 1em 0;
+  padding: 20px 0;
   background: white;
   max-width: 500px;
   border-bottom: 2px solid #ccc;
@@ -96,4 +96,14 @@ hr {
   border-left: none;
   border-right: none;
   border-bottom: none;
+}
+
+/* Responsive CSS for phones, tablets */
+@media all and (max-width:630px) {
+  #switcher .inner {
+    height: 60px;
+  }
+  #card {
+    padding-top: 110px;
+  }
 }
