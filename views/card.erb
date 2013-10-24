@@ -152,6 +152,7 @@ $(function() {
     changeTime[0] = parseInt($(this).val());
     changeTime[1] = Math.round(changeTime[0] * 0.67);
     $('#timer').trigger('start', changeTime[$('#card .back').is(':visible') ? 1 : 0]);
+    if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
   });
   
   var mobileBrowsers = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
