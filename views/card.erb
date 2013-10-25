@@ -174,7 +174,12 @@ $(function() {
     $('#container').click(function(e) { 
       if (!$(e.target).closest('#switcher').length) { $('#next').click(); }
     });
-  } 
+  }
+  
+  // Make sure that the toolbar doesn't obscure content
+  $(window).resize(function() {
+    $('#card').css('padding-top', ($('#switcher').outerHeight() + 24) + 'px');
+  }).resize();
   
 });
 </script>
