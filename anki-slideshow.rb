@@ -3,13 +3,15 @@ require "json"
 
 require "backports/1.9.1/array/sample"
 
-# A mobile-optimized wiki for the East Harlem Health Outreach
-# Partnership, Icahn School of Medicine at Mount Sinai, NY, NY
+# Displays Anki flashcards, exported from Anki as HTML, 
+# in a simple slideshow-like interface on a webpage.
 #
-# Original license for git-wiki.rb is WTFPL
-# License for this fork is MIT (see README.markdown)
+# See http://github.com/powerpak/anki-slideshow for details.
 
 module AnkiSlideshow
+  
+  NO_CARDS_MESSAGE = "No cards in this deck, please select another."
+  X_FRAME_OPTIONS = "ALLOW-FROM http://tedpak.com"
   
   class << self
     attr_accessor :data_dir, :media_dir, :cards, :decks
@@ -32,7 +34,7 @@ module AnkiSlideshow
     before do
       @deck = nil
       @decks = AnkiSlideshow.decks.keys.sort
-      headers "X-Frame-Options" => "ALLOW-FROM http://tedpak.com"
+      headers "X-Frame-Options" => X_FRAME_OPTIONS
       content_type "text/html", :charset => "utf-8"
     end
 
@@ -50,7 +52,8 @@ module AnkiSlideshow
       pass unless deck
       random_card_id = deck.sample.to_s
       @title = @deck_name = params[:deck]
-      @card = AnkiSlideshow.cards[random_card_id]
+      if random_card_id then @card = AnkiSlideshow.cards[random_card_id]
+      else @card = {"q": NO_CARDS_MESSAGE, "a": NO_CARDS_MESSAGE}
       erb :card
     end
 
