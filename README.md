@@ -27,9 +27,11 @@ Installation
 
 3. Create a folder to hold the flashcard data: `mkdir anki-data`.  (You can change this in `config.ru`).
 
-4. If this computer is different from the one that has your Anki decks, make sure that the `anki-data` is accessible to you via SSH, and that you can get into it without a password using [SSH keys](http://www.debian.org/devel/passwordlessssh).  If it's the same computer, don't worry about this.
+4. If this computer is different from the one that has your Anki decks, make sure that the `anki-data` is accessible to you via SSH, and that you can get into it without a password using [SSH keys][keys].  If it's the same computer, don't worry about this.
 
-5. On the computer that has your Anki decks, copy or symlink the .py file from the anki-plugin directory into your Anki addons folder.  On most platforms, this folder is in your user's Documents folder, under Anki/addons.
+[keys]: https://help.ubuntu.com/community/SSH/OpenSSH/Keys
+
+5. On the computer that has your Anki decks, copy or symlink the `anki-slideshow.py` file from the anki-plugin directory into your Anki addons folder.  On most platforms, this folder is in your user's Documents folder, under Anki/addons.
 
 6. Run Anki.  Once you're at the main window with all your decks, you'll now notice an "Export Cards to Anki-Slideshow" item under the Tools menu.  Click it.
 
