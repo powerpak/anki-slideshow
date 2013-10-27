@@ -72,11 +72,10 @@ def exportCardsToWeb():
 def getSyncTarget(prev_data = None):
     json_filename, media_path = getPaths()
     
-    label = '''If you would like to serve the anki-slideshow Rack application from another
-computer, you need to sync the files to that server.  Enter the username@hostname:path to 
-the anki-data folder on the server, and we can try to use rsync to automatically copy them.
-Ensure that you have permissions to rsync -r to this destination and that you have setup SSH
-keys so that a password is not required.'''
+    label = '''You'll need to sync the files to the anki-data folder in the Rack application.
+Enter the [[username@]hostname:]path to the anki-data folder (which can be on another server).
+We'll try to use rsync to automatically copy them.  Ensure that you have permissions to rsync -r
+to this destination, and if it is remote, set up SSH keys so that a password is not required.'''
     
     called_during_export = prev_data is not None
     if not called_during_export: prev_data = getPrevData()
@@ -88,10 +87,7 @@ keys so that a password is not required.'''
     text, ok = QInputDialog.getText(mw, 'Set Sync Destination', label, QLineEdit.Normal, prev_target)
     
     if ok:
-        if ':' in text:
-            prev_data['sync_target'] = text
-        else:
-            showInfo("Please separate the hostname and path with a colon.")
+        prev_data['sync_target'] = text
     elif called_during_export:
         prev_data['sync_target'] = ''
     
