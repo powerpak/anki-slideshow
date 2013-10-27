@@ -10,7 +10,7 @@ require "backports/1.9.1/array/sample"
 
 module AnkiSlideshow
   
-  NO_CARDS_MESSAGE = "No cards in this deck, please select another."
+  NO_CARDS_MESSAGE = "<strong>No cards in this deck, please select another.</strong>"
   X_FRAME_OPTIONS = "ALLOW-FROM http://tedpak.com"
   
   class << self
