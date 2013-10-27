@@ -48,10 +48,10 @@ module AnkiSlideshow
     end
     
     get "/:deck" do
+      @title = @deck_name = params[:deck]
       deck = AnkiSlideshow.decks[params[:deck]]
       pass unless deck
-      random_card_id = deck.sample.to_s
-      @title = @deck_name = params[:deck]
+      random_card_id = deck.sample && deck.sample.to_s
       if random_card_id then @card = AnkiSlideshow.cards[random_card_id]
       else @card = {"q" => NO_CARDS_MESSAGE, "a" => NO_CARDS_MESSAGE}; end
       erb :card
