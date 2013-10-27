@@ -53,7 +53,7 @@ module AnkiSlideshow
       random_card_id = deck.sample.to_s
       @title = @deck_name = params[:deck]
       if random_card_id then @card = AnkiSlideshow.cards[random_card_id]
-      else @card = {"q" => NO_CARDS_MESSAGE, "a" => NO_CARDS_MESSAGE}
+      else @card = {"q" => NO_CARDS_MESSAGE, "a" => NO_CARDS_MESSAGE}; end
       erb :card
     end
 
