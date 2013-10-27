@@ -1,7 +1,7 @@
 anki-slideshow
 ==============
 
-Displays [Anki][anki] flashcards, exported from Anki as HTML, in a simple slideshow-like interface on a webpage.  Check out a working demo [on my personal site](http://learn.tedpak.com/).
+Displays [Anki][anki] flashcards, exported from Anki as HTML, in a simple slideshow-like interface on a webpage.  Check out a working demo of my [flashcards for med school](http://learn.tedpak.com/).
 
 This is just for casual browsing: unlike the [Anki desktop clients][ankidl] or the [AnkiWeb interface][ankiweb], correct/incorrect answers are not tracked and scheduling data is not saved in any way.  I find this useful for leaving up info that I can watch when I'm bored.
 
