@@ -32,6 +32,7 @@ module AnkiSlideshow
     before do
       @deck = nil
       @decks = AnkiSlideshow.decks.keys.sort
+      headers "X-Frame-Options" => "ALLOW-FROM http://tedpak.com"
       content_type "text/html", :charset => "utf-8"
     end
 
