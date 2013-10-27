@@ -1,25 +1,29 @@
 anki-slideshow
 ==============
 
-Displays [Anki][anki] flashcards, exported from Anki as HTML, in a simple slideshow-like interface on a webpage.
+Displays [Anki][anki] flashcards, exported from Anki as HTML, in a simple slideshow-like interface on a webpage.  Check out a working demo [on my personal site](http://learn.tedpak.com/).
 
-This is just for casual browsing: answers are not tracked and scheduling data is not saved in any way.
+This is just for casual browsing: unlike the [Anki desktop clients][ankidl] or the [AnkiWeb interface][ankiweb], correct/incorrect answers are not tracked and scheduling data is not saved in any way.  I find this useful for leaving up info that I can watch when I'm bored.
 
-It is implemented as a Ruby/Rack application built with [Sinatra][sinatra].  Ruby is preinstalled on most Macs and packaged for most Linuxes.  For deployment, techniques for any Rack apply, and it could be served with, e.g., Apache/Passenger, nginx/Passenger or nginx/Unicorn.
+It is implemented as a Ruby/Rack application built with [Sinatra][sinatra].  Ruby is preinstalled on most Macs and packaged for most Linuxes, and all necessary gems can be acquired with [RubyGems][rg] and [bundler][].  For deployment, techniques for any Rack apply, and it could be served with, e.g., Apache/Passenger, nginx/Passenger or nginx/Unicorn.
 
-For getting data from your Anki decks into the web app, an Anki plugin is provided, which can be used with the Mac, Windows, or Linux/BSD [Anki desktop clients][ankidl].  The plugin exports all flashcard data and transfers it to the location of the Rack app via [rsync][] (you can create decks on one computer and serve them from another).
+For getting data from your Anki decks into the web app, an Anki plugin is provided, which can be used with the Mac, Windows, or Linux/BSD [Anki desktop clients][ankidl].  The plugin exports all flashcard data and transfers it to the location of the Rack app via [rsync][] (i.e., you can create decks on one computer and serve them from another).  If you use Anki for Windows, you'll need to install rsync first via [Cygwin][cygwin], but it should already be installed on most Macs and Linuxes.
 
 [anki]: http://ankisrs.net/
 [sinatra]: http://www.sinatrarb.com/
 [ankidl]: http://ankisrs.net/#download
 [rsync]: http://rsync.samba.org/
+[ankiweb]: https://ankiweb.net/
+[rg]: http://www.rubygems.org/
+[bundler]: http://bundler.io/
+[cygwin]: http://www.cygwin.com/
 
 Installation
 ------------
 
 1. Clone this repository to the computer that will serve the Rack web application, and `cd` into it.
 
-2. You will need some [Ruby gems](http://www.rubygems.org/).  First, `gem install bundler`, then `bundle install`.
+2. You will need some [Ruby gems][rg].  First, `gem install bundler`, then `bundle install`.
 
 3. Create a folder to hold the flashcard data: `mkdir anki-data`.  (You can change this in `config.ru`).
 
