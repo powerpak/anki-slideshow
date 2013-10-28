@@ -1,28 +1,28 @@
-<div id="container">
-  
-  <div id="switcher">
-    <div class="inner">
-      Deck: 
-      <select name="decks" id="decks">
-        <% @decks.each do |d| %>
-        <option<%= @deck_name == d ? ' selected' : '' %> value="<%= d %>"><%= d %></option>
-        <% end %>
-      </select>
-      <input type="button" name="next" id="next" value="Turn over">
-      <select name="delay" id="delay">
-        <option value="0">off</option>
-        <option value="5000">5s</option>
-        <option value="10000" selected>10s</option>
-        <option value="15000">15s</option>
-        <option value="20000">20s</option>
-        <option value="30000">30s</option>
-        <option value="40000">40s</option>
-        <option value="60000">60s</option>
-      </select>
-      <canvas width="20" height="20" id="timer"></canvas>
-      <span id="paused">paused</span>
-    </div>
+<div id="switcher">
+  <div class="inner">
+    Deck: 
+    <select name="decks" id="decks">
+      <% @decks.each do |d| %>
+      <option<%= @deck_name == d ? ' selected' : '' %> value="<%= d %>"><%= d %></option>
+      <% end %>
+    </select>
+    <input type="button" name="next" id="next" value="Turn over">
+    <select name="delay" id="delay">
+      <option value="0">off</option>
+      <option value="5000">5s</option>
+      <option value="10000" selected>10s</option>
+      <option value="15000">15s</option>
+      <option value="20000">20s</option>
+      <option value="30000">30s</option>
+      <option value="40000">40s</option>
+      <option value="60000">60s</option>
+    </select>
+    <canvas width="20" height="20" id="timer"></canvas>
+    <span id="paused">paused</span>
   </div>
+</div>
+
+<div id="container">
 
   <div id="card">
     <div class="front solid">
@@ -34,15 +34,15 @@
   </div>
 
   <div id="next-card"></div>
-  
-  <div id="footer">
-    <div class="inner">
-      <a href="http://tedpak.com/learn.html" target="_blank">About</a> this project.
-      Get the <a href="https://github.com/powerpak/anki-slideshow" target="_blank">source code</a>.
-      Content by <a href="http://tedpak.com" target="_blank">Theodore Pak</a>.
-    </div>
-  </div>
 
+</div>
+
+<div id="footer">
+  <div class="inner">
+    <a href="http://tedpak.com/learn.html" target="_blank">About</a> this project.
+    Get the <a href="https://github.com/powerpak/anki-slideshow" target="_blank">source code</a>.
+    Content by <a href="http://tedpak.com" target="_blank">Theodore Pak</a>.
+  </div>
 </div>
 
 <script>
@@ -174,7 +174,7 @@ $(function() {
     });
   } else {
     // On a desktop, use mouse hover to determine when to pause timer
-    $('#container').mouseenter(function() {
+    $('#container, .inner').mouseenter(function() {
       $('body').addClass('hover');
       if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
     }).mouseleave(function() {
