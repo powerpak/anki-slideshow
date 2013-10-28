@@ -48,7 +48,7 @@
 <script>
 $(function() {
   
-  var fadeTime = 500, changeTime = [10000, 6700];
+  var fadeTime = 500, changeTime = [10000, 6700], switcherHeight = 60;
   
   $.fn.extend({
     
@@ -131,6 +131,7 @@ $(function() {
     $('#timer').trigger('callback', nextCard);
     $('#timer').trigger('start', changeTime[1]).removeClass('transition');
     $('#card .back').addClass('solid').fadeIn(fadeTime);
+    $.scrollTo('#card .back hr', fadeTime, {offset: {axis: 'y', top: -switcherHeight}});
     if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
   }
   
@@ -147,6 +148,7 @@ $(function() {
         $('#timer').trigger('callback', flipCard);
         $('#timer').trigger('start', changeTime[0]).removeClass('transition');
         $('#card .front').addClass('solid').fadeIn();
+        $.scrollTo('#card .front', fadeTime, {offset: {axis: 'y', top: -switcherHeight}});
         if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
       });
     });
@@ -186,7 +188,8 @@ $(function() {
   
   // Make sure that the toolbar doesn't obscure content
   $(window).resize(function() {
-    $('#card').css('padding-top', ($('#switcher .inner').outerHeight() + 20) + 'px');
+    switcherHeight = $('#switcher .inner').outerHeight();
+    $('#card').css('padding-top', (switcherHeight + 20) + 'px');
   }).resize();
   
 });
