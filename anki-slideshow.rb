@@ -18,20 +18,31 @@ module AnkiSlideshow
   end
   
   def self.new(data_dir)
-    self.data_dir   = data_dir
+    self.data_dir = data_dir
+    @data_file = File.join(self.data_dir, 'anki-slideshow.json')
     self.media_dir = File.join(data_dir, 'collection.media')
     
-    data = JSON.load(File.open(File.join(data_dir, 'anki-slideshow.json')))
-    self.cards = data["cards"]
-    self.decks = data["decks"]
+    self.load_data
 
     App
+  end
+  
+  def self.load_data()
+    @data_mtime = File.mtime(@data_file)
+    data = JSON.load(File.open(@data_file))
+    self.cards = data["cards"]
+    self.decks = data["decks"]
+  end
+  
+  def self.check_data_updated()
+    if File.mtime(@data_file) > @data_mtime then self.load_data; end
   end
   
   class App < Sinatra::Base
     set :app_file, __FILE__
 
     before do
+      AnkiSlideshow.check_data_updated
       @deck = nil
       @decks = AnkiSlideshow.decks.keys.sort
       headers "X-Frame-Options" => X_FRAME_OPTIONS
