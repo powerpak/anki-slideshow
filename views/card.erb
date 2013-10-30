@@ -125,11 +125,11 @@ $(function() {
   });
   
   function flipCard(e) {
-    $('#timer').trigger('stop').addClass('transition');
+    $('#timer').trigger('stop');
     $('#card .front').removeClass('solid').fadeOut(fadeTime);
     $('#next').val('Next card').unbind('click').click(nextCard);
     $('#timer').trigger('callback', nextCard);
-    $('#timer').trigger('start', changeTime[1]).removeClass('transition');
+    $('#timer').trigger('start', changeTime[1]);
     $('#card .back').addClass('solid').fadeIn(fadeTime);
     $.scrollTo('#card .back hr', fadeTime, {offset: {axis: 'y', top: -switcherHeight}});
     if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
@@ -137,6 +137,7 @@ $(function() {
   
   function nextCard(e) {
     var href = encodeURIComponent($('#decks').val());
+    if ($('#timer').hasClass('transition')) { return; } // Don't double-flip the card
     $('#timer').trigger('stop').addClass('transition');
     $("#next-card").load(href + " #card > *", function() {
       $('#card').fadeOut(fadeTime, function() {
