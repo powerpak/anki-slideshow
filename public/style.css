@@ -15,6 +15,12 @@ html, body {
   background-color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.3);
+  -webkit-transition: box-shadow 200ms linear;
+  -moz-transition: box-shadow 200ms linear;
+  -o-transition: box-shadow 200ms linear;
+}
+.hover #container {
+  box-shadow: 0px 0px 25px 7px rgba(0, 0, 0, 0.4);
 }
 
 .cloze {
@@ -72,7 +78,9 @@ html, body {
   font-size: 0.7em;
   opacity: 0; 
   color: #777;
-  -webkit-transition: opacity 500ms linear;
+  -webkit-transition: opacity 200ms linear;
+  -moz-transition: opacity 200ms linear;
+  -o-transition: opacity 200ms linear;
 }
 .hover #paused { opacity: 1; }
 
