@@ -7,11 +7,14 @@ require "backports/1.9.1/array/sample"
 # in a simple slideshow-like interface on a webpage.
 #
 # See http://github.com/powerpak/anki-slideshow for details.
+#
+# Copyright 2013, Theodore Pak.  License: MIT.  See README.md.
 
 module AnkiSlideshow
   
   NO_CARDS_MESSAGE = "<strong>No cards in this deck, please select another.</strong>"
   X_FRAME_OPTIONS = "ALLOW-FROM http://tedpak.com"
+  BASE_TITLE = "Medical School Flashcards"
   
   class << self
     attr_accessor :data_dir, :media_dir, :cards, :decks
@@ -50,10 +53,10 @@ module AnkiSlideshow
       # ... here I am allowing it only from my own site
       headers "X-Frame-Options" => X_FRAME_OPTIONS
       content_type "text/html", :charset => "utf-8"
+      @base_title = BASE_TITLE
     end
 
     get "/" do
-      @title = "Welcome"
       @deck_name = AnkiSlideshow.decks.keys.sample
       @card = {"q" => erb(:welcome), "a" => erb(:welcome, :locals => {:back => true})}
       erb :card
