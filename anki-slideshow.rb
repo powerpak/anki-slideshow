@@ -71,6 +71,8 @@ module AnkiSlideshow
     end
     
     get "/:deck" do
+      # disable HTTP caching since this serves random cards
+      expires 0, :no_cache, :no_store, :must_revalidate
       @title = @deck_name = params[:deck]
       deck = AnkiSlideshow.decks[params[:deck]]
       pass unless deck
