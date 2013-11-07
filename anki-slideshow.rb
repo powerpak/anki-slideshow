@@ -75,7 +75,7 @@ module AnkiSlideshow
       expires 0, :no_cache, :no_store, :must_revalidate
       @title = @deck_name = params[:deck]
       deck = AnkiSlideshow.decks[params[:deck]]
-      pass unless deck
+      redirect "/" unless deck
       random_card_id = deck.sample && deck.sample.to_s
       if random_card_id then @card = AnkiSlideshow.cards[random_card_id]
       else @card = {"q" => NO_CARDS_MESSAGE, "a" => NO_CARDS_MESSAGE}; end
