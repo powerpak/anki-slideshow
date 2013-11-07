@@ -45,12 +45,18 @@ module AnkiSlideshow
       AnkiSlideshow.check_data_updated
       @deck = nil
       @decks = AnkiSlideshow.decks.keys.sort
+      # You can enable all framing by disabling clickjack protection in Rack::Protection...
+      # set :protection, :except => :frame_options
+      # ... here I am allowing it only from my own site
       headers "X-Frame-Options" => X_FRAME_OPTIONS
       content_type "text/html", :charset => "utf-8"
     end
 
     get "/" do
-      redirect "/" + AnkiSlideshow.decks.keys.sample
+      @title = "Welcome"
+      @deck_name = AnkiSlideshow.decks.keys.sample
+      @card = {"q" => erb(:welcome), "a" => erb(:welcome, :locals => {:back => true})}
+      erb :card
     end
     
     get "/:image.jpg" do
