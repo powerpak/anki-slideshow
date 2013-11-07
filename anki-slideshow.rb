@@ -59,7 +59,7 @@ module AnkiSlideshow
     get "/" do
       @deck_name = AnkiSlideshow.decks.keys.sample
       @card = {
-        "q" => erb(:welcome, :layout => false), 
+        "q" => erb(:welcome, :layout => false, :locals => {:back => false}), 
         "a" => erb(:welcome, :layout => false, :locals => {:back => true})
       }
       erb :card
