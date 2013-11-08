@@ -15,6 +15,7 @@ module AnkiSlideshow
   NO_CARDS_MESSAGE = "<strong>No cards in this deck, please select another.</strong>"
   X_FRAME_OPTIONS = "ALLOW-FROM http://tedpak.com"
   BASE_TITLE = "Medical School Flashcards"
+  IMAGE_CONTENT_TYPES = {"jpg" => "jpeg"}
   
   class << self
     attr_accessor :data_dir, :media_dir, :cards, :decks
@@ -65,9 +66,10 @@ module AnkiSlideshow
       erb :card
     end
     
-    get "/:image.jpg" do
-      content_type "image/jpeg"
-      send_file File.join(AnkiSlideshow.media_dir, params[:image] + ".jpg")
+    get %r{/([\w_-]+)\.(jpe?g|png|gif)} do
+      extension = params[:captures].last
+      content_type IMAGE_CONTENT_TYPES[extension] || "image/#{extension}"
+      send_file File.join(AnkiSlideshow.media_dir, request.path_info)
     end
     
     get "/:deck" do
