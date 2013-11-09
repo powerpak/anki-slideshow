@@ -149,6 +149,10 @@ hr {
 
 #footer a:hover { color: #555; }
 
+#seo-decklist {
+  display: none;
+}
+
 
 /* Responsive CSS for phones, tablets */
 @media all and (max-width:630px) {

@@ -8,6 +8,12 @@
 
 <hr />
 
-<p>Currently there are over 9000 flashcards and I sync my current decks regularly.  We'll begin with a random deck, or you can choose one from the deck list above.</p>
+<p>Currently there are over 10,000 flashcards and I sync in more cards every week.  We'll begin with a random deck, or you can choose one from the deck list above.</p>
+
+<ul id="seo-decklist">
+  <% @decks.each do |d| %>
+  <li><a href="/<%= d %>"><%= d %></a></li>
+  <% end %>
+</ul>
 
 <% end %>
