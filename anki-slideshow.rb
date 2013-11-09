@@ -66,8 +66,11 @@ module AnkiSlideshow
       erb :card
     end
     
+    get "/sitemap.txt" do content_type "text/plain"; erb :sitemap, :layout => false; end
+    
     get %r{/([\w_-]+)\.(jpe?g|png|gif)} do
       extension = params[:captures].last
+      cache_control :public, :max_age => 36000
       content_type IMAGE_CONTENT_TYPES[extension] || "image/#{extension}"
       send_file File.join(AnkiSlideshow.media_dir, request.path_info)
     end
