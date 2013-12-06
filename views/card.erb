@@ -153,6 +153,7 @@ $(function() {
         $.scrollTo('#card .front', fadeTime, {offset: {axis: 'y', top: -switcherHeight}});
         if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
       });
+      ga && ga('send', 'pageview', href); // Track the AJAX page load
     });
   }
   
