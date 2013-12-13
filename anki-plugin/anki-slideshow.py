@@ -42,6 +42,10 @@ def exportCardsToWeb():
     for card in mw.col.renderQA(None, "all"):
         id = card["id"]
         del card["id"]
+        tags = mw.col.getNote(mw.col.getCard(id).nid).tags
+        for tag in tags:
+            if tag[0:11] == "zz_lecture_":
+                card["lec"] = int(tag[11:])
         export["cards"][id] = card
     
     # If there is no sync target saved in the previous configuration, ask for it

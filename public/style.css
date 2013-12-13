@@ -153,10 +153,11 @@ hr {
   display: none;
 }
 
-
-/* Responsive CSS for phones, tablets */
-@media all and (max-width:630px) {
-
+.lecture-number {
+  font-variant: small-caps;
+  margin-top: 1em;
+  font-size: 80%;
+  opacity: 0.2;
 }
 
 /* Responsive CSS for wide screens: bump the font size a little for comfort */

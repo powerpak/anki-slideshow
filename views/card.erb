@@ -30,6 +30,9 @@
     </div>
     <div class="back">
       <%= @card["a"] %>
+      <% if @card["lec"] %>
+        <div class="lecture-number"><strong>based on lecture</strong> <%= @card["lec"] %></div>
+      <% end %>
     </div>
   </div>
 
