@@ -2,8 +2,8 @@
   <div class="inner">
     Deck: 
     <select name="decks" id="decks">
-      <% @decks.each do |d| %>
-      <option<%= @deck_name == d ? ' selected' : '' %> value="<%= d %>"><%= d %></option>
+      <% @decks.each do |d, s| %>
+      <option<%= @deck_name == d ? ' selected' : '' %> value="<%= d %>"><%= d %> (<%= s %>)</option>
       <% end %>
     </select>
     <input type="button" name="next" id="next" value="Turn over">

@@ -48,7 +48,8 @@ module AnkiSlideshow
     before do
       AnkiSlideshow.check_data_updated
       @deck = nil
-      @decks = AnkiSlideshow.decks.keys.sort
+      @decks = {}
+      AnkiSlideshow.decks.keys.sort.each{|k| @decks[k] = AnkiSlideshow.decks[k].size }
       # You can enable all framing by disabling clickjack protection in Rack::Protection...
       # set :protection, :except => :frame_options
       # ... here I am allowing it only from my own site
