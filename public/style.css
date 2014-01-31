@@ -202,6 +202,10 @@ html.night, .night body {
   opacity: 0.5;
 }
 
+.night .cloze {
+  color: #7ee;
+}
+
 /* Responsive CSS for wide screens: bump the font size a little for comfort */
 @media all and (min-width:900px) {
   html, body { font-size: 120%; }
