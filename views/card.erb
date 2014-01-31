@@ -52,6 +52,14 @@
 <script>
 $(function() {
   
+  var hash = window.location.hash, 
+    digits = hash.match(/\d+/);
+  if (hash.match(/night/)) { $('html').addClass('night'); }
+  if (digits) { 
+    $('body').css('font-size', digits[0] + '%');
+    $('#container, #switcher .inner, #footer .inner').css('max-width', 700 * parseFloat(digits[0]) / 100)
+  }
+  
   var fadeTime = 500, changeTime = [10000, 6700], switcherHeight = 60;
   
   $.fn.extend({
@@ -140,12 +148,13 @@ $(function() {
   }
   
   function nextCard(e) {
-    var href = encodeURIComponent($('#decks').val());
+    var href = encodeURIComponent($('#decks').val()),
+      absoluteHref = $('<a/>').attr('href', href).get(0).href;
     if ($('#timer').hasClass('transition')) { return; } // Don't double-flip the card
     $('#timer').trigger('stop').addClass('transition');
     $("#next-card").load(href + " #card > *", function() {
       $('#card').fadeOut(fadeTime, function() {
-        if (window.history && window.history.pushState && window.location.href != href) {
+        if (window.history && window.history.pushState && window.location.href != absoluteHref) {
           window.history.pushState(null, null, href);
         }
         $('#card').empty().show().append($('#next-card > *'));
