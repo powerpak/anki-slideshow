@@ -56,7 +56,7 @@ $(function() {
     digits = hash.match(/\d+/);
   if (hash.match(/night/)) { $('html').addClass('night'); }
   if (digits) { 
-    $('body').css('font-size', digits[0] + '%');
+    $('#container').css('font-size', digits[0] + '%');
     $('#container, #switcher .inner, #footer .inner').css('max-width', 700 * parseFloat(digits[0]) / 100)
   }
   
