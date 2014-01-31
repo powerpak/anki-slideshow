@@ -79,12 +79,12 @@ $(function() {
             (Math.PI * 2) * fracElapsed - Math.PI / 2, false);
           ctx.moveTo(w / 2, h / 2);
           ctx.closePath();
-          ctx.fillStyle = "#ccc";
+          ctx.fillStyle = $('html').hasClass('night') ? '#333' : "#ccc";
           ctx.fill();
           ctx.beginPath();
           ctx.arc(w / 2, h / 2, h / 4, 0, Math.PI * 2, false);
           ctx.closePath();
-          ctx.fillStyle = "#fff";
+          ctx.fillStyle = $('html').hasClass('night') ? '#000' : "#fff";
           ctx.fill();
           
           if (duration > 0 && fracElapsed == 1.0) {
@@ -156,7 +156,7 @@ $(function() {
         $.scrollTo('#card .front', fadeTime, {offset: {axis: 'y', top: -switcherHeight}});
         if ($('body').is('.hover')) { $('#timer').trigger('stop'); }
       });
-      ga && ga('send', 'pageview', href); // Track the AJAX page load
+      window.ga && window.ga('send', 'pageview', href); // Track the AJAX page load
     });
   }
   
@@ -191,6 +191,10 @@ $(function() {
       if (!$(e.target).closest('#switcher').length) { $('#next').click(); }
     });
   }
+  
+  $('body').click(function(e) { 
+    if (!$(e.target).closest('#container, #footer, #switcher').length) { $('html').toggleClass('night'); }
+  });
   
   // Make sure that the toolbar doesn't obscure content
   $(window).resize(function() {
