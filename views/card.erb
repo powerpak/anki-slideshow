@@ -190,8 +190,10 @@ $(function() {
   } else {
     // On a desktop, use mouse hover to determine when to pause timer
     $('#container, .inner').mouseenter(function() {
-      $('body').addClass('hover');
-      if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
+      if (!$('html').hasClass('night')) {
+        $('body').addClass('hover');
+        if ($('#timer').not('.transition')) { $('#timer').trigger('stop'); }
+      }
     }).mouseleave(function() {
       $('body').removeClass('hover');
       if ($('#timer').not('.transition')) { $('#timer').trigger('start'); }
