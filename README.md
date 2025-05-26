@@ -43,8 +43,6 @@ Installation
 
 More complex setups involving nginx or Apache are possible, if you would like to run the app behind a robust web server.  For such situations, you'll want to check out [Passenger](https://www.phusionpassenger.com/) or [Unicorn](http://unicorn.bogomips.org/).
 
-It may also be possible to serve this via Heroku, but I haven't tried yet.
-
 License
 -------
 
